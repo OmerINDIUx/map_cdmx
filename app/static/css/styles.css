@@ -1,0 +1,115 @@
+/* Estilos generales para todo el cuerpo */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Estilo para el contenedor del mapa */
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Contenedor de controles GTFS */
+#gtfs-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Estilo para el input de archivo */
+#gtfsFile {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Menú de capas */
+#layer-toggle-menu {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-family: sans-serif;
+  z-index: 1000; /* Asegura que se superponga al mapa */
+  width: 200px; /* Puedes ajustar el ancho */
+}
+
+/* Título de la capa que tiene un cursor de "puntero" */
+#layer-toggle-menu h4 {
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Opciones del menú de capas */
+#layer-toggle-options {
+  margin-top: 10px;
+  display: none; /* Inicialmente oculto */
+  max-height: 0; /* Comienza cerrado */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+/* Agregar la animación cuando se despliega el menú */
+#layer-toggle-menu.open #layer-toggle-options {
+  display: block;
+  max-height: 500px; /* Ajusta esto según tus necesidades */
+  transition: max-height 0.5s ease-in;
+}
+
+/* Estilos para cada opción del menú (checkbox) */
+#layer-toggle-options label {
+  display: block;
+  margin: 5px 0;
+}
+
+
+
+/* Estilo general para el selector de rutas */
+#routeSelector {
+  position: absolute;
+  top: 10px; /* Puedes ajustarlo según necesites */
+  left: 50%; /* Centrado horizontal */
+  transform: translateX(-50%); /* Centrado exacto */
+  z-index: 1001; /* Asegúrate de que esté encima de otros elementos */
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con algo de transparencia */
+  padding: 5px 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para que se vea mejor */
+}
+
+
+/* Cambio de color y sombra al pasar el mouse */
+#routeSelector:hover {
+  border-color: #007BFF;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Estilo para las opciones dentro del selector */
+#routeSelector option {
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+/* Estilo al hacer foco en el select */
+#routeSelector:focus {
+  outline: none; /* Elimina el borde de enfoque predeterminado */
+  border-color: #007BFF;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Estilo para dispositivos móviles (más pequeño) */
+@media (max-width: 600px) {
+  #routeSelector {
+    width: 100%; /* Hace que el selector ocupe todo el ancho en pantallas pequeñas */
+  }
+}

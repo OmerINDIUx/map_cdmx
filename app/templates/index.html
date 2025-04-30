@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Mapa CDMX - Tráfico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Estilos de Mapbox -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+
+  <!-- JS de Mapbox -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+  <!-- jQuery (Requerido para DataTables) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <!-- Cargar los archivos JS -->
+  <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='js/frequencies.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/stop_times.js') }}"></script>
+
+
+</head>
+<body>
+
+  <!-- Mapa -->
+  <div id="map" style="width: 100%; height: 100vh;"></div>
+
+  <div id="layer-toggle-menu">
+    <h4 onclick="toggleLayerMenu()">Capas ocultas ▼</h4>
+    <div id="layer-toggle-options">
+      <!-- Aquí se agregan las capas dinámicamente -->
+    </div>
+  </div>
+
+
+<!-- Controles GTFS -->
+<div id="gtfs-controls">
+  <input type="file" id="gtfsFile" />
+  <button id="uploadButton">Subir GTFS</button> <!-- AHORA sí tiene id -->
+</div>
+
+
+  <!-- Canvas para luces -->
+  <canvas id="canvas-luces" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+
+  <!-- Script principal (módulo) -->
+  <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <div id="layerMenu" style="position:absolute; top:10px; right:10px; background:white; padding:10px; z-index:1; border-radius:5px; box-shadow:0 0 5px rgba(0,0,0,0.2);">
+    <strong>Capas:</strong><br>
+  </div>
+  
+  <select id="routeSelector" onchange="toggleRouteLayer()">
+    <option value="all">Todas las rutas</option>
+    <option value="suburban_train">Tren suburbano</option>
+    <option value="metro">Metro</option>
+    <option value="bus">Autobús</option>
+    <option value="ferry">Ferry</option>
+    <option value="tram">Tranvía</option>
+    <option value="cable_car">Cable aéreo</option>
+  </select>
+  <div id="uploadStatus"></div>
+
+<h2>Resultado:</h2>
+<pre id="output" style="background-color: #f0f0f0; padding: 10px;"></pre>
+<script type="module">
+  import { uploadGTFS } from "{{ url_for('static', filename='js/gtfs-upload.js') }}";
+
+  document.getElementById('uploadButton').addEventListener('click', uploadGTFS);
+</script>
+
+
+<h1>Datos del GTFS</h1>
+
+<h2>Calendario</h2>
+<table id="calendar-table" class="display">
+    <thead>
+        <tr>
+            <th>service_id</th>
+            <th>monday</th>
+            <th>tuesday</th>
+            <th>wednesday</th>
+            <th>thursday</th>
+            <th>friday</th>
+            <th>saturday</th>
+            <th>sunday</th>
+            <th>start_date</th>
+            <th>end_date</th>
+        </tr>
+    </thead>
+    <tbody id="calendar-data"></tbody>
+</table>
+
+<h2>Frecuencias</h2>
+<table id="frequencies-table" class="display">
+    <thead>
+        <tr>
+            <th>trip_id</th>
+            <th>headway_secs</th>
+        </tr>
+    </thead>
+    <tbody id="frequencies-data"></tbody>
+</table>
+
+<h2>Horarios de Paradas</h2>
+<table id="stop-times-table" class="display">
+    <thead>
+        <tr>
+            <th>trip_id</th>
+            <th>arrival_time</th>
+            <th>departure_time</th>
+            <th>stop_id</th>
+            <th>stop_sequence</th>
+        </tr>
+    </thead>
+    <tbody id="stop-times-data"></tbody>
+</table>
+
+  
+</body>
+</html>
