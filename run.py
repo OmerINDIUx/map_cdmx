@@ -77,6 +77,7 @@ def upload_gtfs():
                 properties=props
             )
             stop_features.append(feature)
+    # --- comentario pueb OMER ---
 
     geojson_result['stops'] = geojson.FeatureCollection(stop_features)
 
